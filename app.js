@@ -2,9 +2,12 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const port = 2024;
+const cors = require("cors");
+app.use(cors());
 
 //user routes middleware file
 const UserRoutes = require("./routes/userRoute");
+
 // authotication middlewar
 const authMiddleware = require("./middleware/authMiddleware");
 
