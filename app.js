@@ -5,7 +5,7 @@ const port = 2024;
 const cors = require("cors");
 app.use(cors());
 
-//user routes middleware file
+//user routes middleware file.file.
 const UserRoutes = require("./routes/userRoute");
 
 // authotication middlewar

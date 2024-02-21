@@ -20,4 +20,5 @@ async function authMiddleware(req, res, next) {
       .json({ msg: "Authorized invalide" });
   }
 }
+
 module.exports = authMiddleware;
