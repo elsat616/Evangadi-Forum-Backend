@@ -17,3 +17,6 @@ const dbConnection = mysql2.createPool({
 // });
 
 module.exports = dbConnection.promise();
+
+///// turn this on only when creating a table then it off.
+// module.exports = dbConnection
