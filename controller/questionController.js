@@ -6,14 +6,14 @@ async function askQuestion(req, res) {
 
   const questionid = crypto.randomUUID();
 
-  const userid = req.body.userid;
+  const userid = req.user.userid;
 
   console.log(userid + " ---user id");
 
   console.log(questionid + " ---question");
 
   if (!title || !description) {
-    res
+    return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ msg: "please provide all required fields!" });
   }
