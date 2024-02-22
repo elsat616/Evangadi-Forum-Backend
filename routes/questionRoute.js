@@ -8,6 +8,6 @@ router.get("/all-questions", (req, res) => {
   res.send("all questions");
 });
 
-router.post("/askQuestions", askQuestion);
+router.post("/askQuestion", askQuestion);
 
 module.exports = router;
