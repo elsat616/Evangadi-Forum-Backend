@@ -15,6 +15,7 @@ async function register(req, res) {
       "select username,userid from users where username =? or email =?",
       [username, email]
     );
+    console.log(user);
     if (user.length > 0) {
       return res
         .status(StatusCodes.BAD_REQUEST)
