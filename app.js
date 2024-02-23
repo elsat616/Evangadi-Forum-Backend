@@ -5,6 +5,14 @@ const port = 2024;
 const cors = require("cors");
 app.use(cors());
 
+//////////////////// table start//////////////////////////
+// table routes middleware file
+const tableRouter = require("./routes/createTableRoute");
+
+// table routes middleware
+app.use("", tableRouter);
+/*******************table end*************************/
+
 //user routes middleware file.file.
 const UserRoutes = require("./routes/userRoute");
 
@@ -32,7 +40,7 @@ async function start() {
     const result = await dbConnection.execute("select'test' ");
     app.listen(port);
     console.log("database connection established");
-    console.log(`listening on ${port}`);
+    console.log(`listening on port  http://localhost:${port}`);
   } catch (error) {
     console.log(error.message);
   }
