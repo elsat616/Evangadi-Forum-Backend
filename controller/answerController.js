@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const dbConnection = require("../db/dbConfig");
-const { allQuestions } = require("./questionController");
+
 
 // Post answer
 async function postAnswer(req, res) {
