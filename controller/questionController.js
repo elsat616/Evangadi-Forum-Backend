@@ -32,5 +32,21 @@ async function askQuestion(req, res) {
       .json({ msg: "something went wrong, try again later!kkk" });
   }
 }
+//all questions function
+async function allQuestions(req, res) {
+	try {
+		//query all questions from the questions database
+		const [allQuestion] = await dbConnection.query(
+			"SELECT q.title, q.description, q.questionid ,q.tag ,u.username  FROM questions q JOIN users u ON q.userid = u.userid ORDER BY id DESC;"
+		);
+		return res.status(StatusCodes.OK).json({ allQuestion });
+	} catch (error) {
+		// Log and return a 500 internal server error response if an error occurs
+		// console.log(error.message);
+		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			msg: "Something went wrong, please try again",
+		});
+	}
+}
 
-module.exports = { askQuestion };
+module.exports = { askQuestion, allQuestions };
