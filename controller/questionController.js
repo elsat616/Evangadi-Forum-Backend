@@ -33,4 +33,23 @@ async function askQuestion(req, res) {
   }
 }
 
-module.exports = { askQuestion };
+async function getQuestion(req, res) {
+  try {
+    const [questions] = await dbConnection.query(
+      `SELECT id,userid,title,description From questions`
+    );
+
+    if (questions.length == 0) {
+      return res.json({ msg: "no question posted" });
+    }
+
+    res.status(StatusCodes.OK).json(questions);
+  } catch (error) {
+    console.log(error.message);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ msg: "something went wrong, try again later!555" });
+  }
+}
+
+module.exports = { askQuestion, getQuestion };
