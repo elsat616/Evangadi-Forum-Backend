@@ -25,6 +25,9 @@ const dbConnection = require("./db/dbConfig");
 //do questions middleware
 const questionsRoutes = require("./routes/questionRoute");
 
+//answer route middleware file
+const answerRoutes = require("./routes/answerRoute");
+
 //json middleware to extract json
 app.use(express.json());
 
@@ -34,7 +37,10 @@ app.use("/api/users", UserRoutes);
 //questions routes middleware
 app.use("/api/questions", authMiddleware, questionsRoutes);
 
-//answer routes middleware
+
+// answer routes middleware
+app.use("/api/answers", authMiddleware, answerRoutes);
+
 async function start() {
   try {
     const result = await dbConnection.execute("select'test' ");

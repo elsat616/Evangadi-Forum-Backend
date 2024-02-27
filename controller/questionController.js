@@ -20,6 +20,8 @@ async function askQuestion(req, res) {
   }
 
   try {
+
+
     await dbConnection.query(
       `INSERT INTO questions (questionid, userid, title, description) VALUES (?, ?, ?, ?)`,
       [questionid, userid, title, description]
@@ -54,5 +56,31 @@ async function getQuestion(req, res) {
       .json({ msg: "Something went wrong, try again later!" });
   }
 }
+//single question function
+async function singleQuestion(req, res) {
+	//const questionid = req.params.questionid;
+    const { questionid } = req.body;
+	try {
+		// Perform a SELECT query to fetch a single question by its ID
+		const query = "SELECT * FROM questions WHERE questionid = ?";
+		const [question] = await dbConnection.query(query, [questionid]);
+		// console.log(query)
+		// console.log(question[0]);
 
-module.exports = { askQuestion, getQuestion };
+		if (question.length === 0) {
+			return res
+				.status(StatusCodes.NOT_FOUND)
+				.json({ msg: "Question not found" });
+		}
+		// Send the retrieved question as a JSON response
+		res.status(StatusCodes.OK).json(question[0]);
+	} catch (error) {
+		console.log(error);
+		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+			msg: "Something went wrong while fetching the question",
+		});
+	}
+}
+module.exports = { askQuestion, getQuestion, singleQuestion };
+
+
