@@ -1,5 +1,5 @@
 // db connection
-const dbconnection = require("../db/dbConfig");
+const dbConnection = require("../db/dbConfig");
 
 // Database table creator function
 function createTable(req, res) {
@@ -40,7 +40,7 @@ function createTable(req, res) {
 
   //Create Table Query function
   function CreateTable(table) {
-    dbconnection.query(table, (err) => {
+    dbConnection.query(table, (err) => {
       if (err) console.log(err);
       else console.log("table created");
       res.end("table created");

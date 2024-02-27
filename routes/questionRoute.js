@@ -1,14 +1,21 @@
 const express = require("express");
 const router = express.Router();
+const authMiddleware =  require("../middleware/authMiddleware");
 
 //questions controllers
 const {
   askQuestion,
   getQuestion,
+  singleQuestion
 } = require("../controller/questionController");
 
-router.get("/", getQuestion);
+//pull all questions
+router.get("/allQuestion", authMiddleware, getQuestion);
 
-router.post("/askQuestion", askQuestion);
+//single question routes
+router.get("/singleQuestion", authMiddleware, singleQuestion);
+
+//post a question
+router.post("/askQuestion", authMiddleware, askQuestion);
 
 module.exports = router;
