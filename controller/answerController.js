@@ -14,7 +14,17 @@ async function postAnswer(req, res) {
 			.json({ msg: "Provide answer field" });
 	}
 
-	try {
+	try {	const [duplicateAnswer] = await dbConnection.query(
+		"SELECT userid, questionid FROM answers WHERE userid = ? AND questionid = ?",
+		[userid, questionid]
+	);
+	console.log(duplicateAnswer);
+
+	if (duplicateAnswer.length > 0) {
+		return res.status(StatusCodes.BAD_REQUEST).json({
+			msg: "You have already posted an answer for this question",
+		});
+	}
 		await dbConnection.query(
 			"INSERT INTO answers (userid, questionid, answer) VALUES (?, ?, ?)",
 			[userid, questionid, answer]
