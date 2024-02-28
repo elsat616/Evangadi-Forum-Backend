@@ -5,28 +5,19 @@ const port = 2024;
 const cors = require("cors");
 app.use(cors());
 
-//////////////////// table start//////////////////////////
-// table routes middleware file
-const tableRouter = require("./routes/createTableRoute");
-
-// table routes middleware
-app.use("", tableRouter);
-/*******************table end*************************/
-
-//user routes middleware file.file.
-const UserRoutes = require("./routes/userRoute");
+//do connection
+const dbConnection = require("./db/dbConfig");
 
 // authotication middlewar
 const authMiddleware = require("./middleware/authMiddleware");
 
-//do connection
-const dbConnection = require("./db/dbConfig");
+//user routes middleware file.file.
+const UserRoutes = require("./routes/userRoute");
 
 //do questions middleware
 const questionsRoutes = require("./routes/questionRoute");
 
-//answer route middleware file
-const answerRoutes = require("./routes/answerRoute");
+const answersRoutes = require("./routes/answerRoute");
 
 //json middleware to extract json
 app.use(express.json());
@@ -37,10 +28,11 @@ app.use("/api/users", UserRoutes);
 //questions routes middleware
 app.use("/api/questions", authMiddleware, questionsRoutes);
 
+// app.use("/api/questions", questionsRoutes);
 
-// answer routes middleware
-app.use("/api/answers", authMiddleware, answerRoutes);
-
+//answer routes middleware
+app.use("/api/answers", authMiddleware, answersRoutes);
+// app.use("/api/answers", answersRoutes);
 async function start() {
   try {
     const result = await dbConnection.execute("select'test' ");
