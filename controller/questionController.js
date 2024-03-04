@@ -1,6 +1,7 @@
 const dbConnection = require("../db/dbConfig");
 const { StatusCodes } = require("http-status-codes");
 const crypto = require("crypto");
+const { createContext } = require("vm");
 
 async function askQuestion(req, res) {
   const { title, description } = req.body;
@@ -20,8 +21,6 @@ async function askQuestion(req, res) {
   }
 
   try {
-
-
     await dbConnection.query(
       `INSERT INTO questions (questionid, userid, title, description) VALUES (?, ?, ?, ?)`,
       [questionid, userid, title, description]
@@ -35,11 +34,10 @@ async function askQuestion(req, res) {
       .json({ msg: "Something went wrong, try again later!" });
   }
 }
-
 async function getQuestion(req, res) {
   try {
     const [questions] = await dbConnection.query(
-      `SELECT questions.id, questions.userid, questions.title, questions.description FROM questions INNER JOIN Evangadi_db.users ON questions.userid = Evangadi_db.users.userid`
+      `SELECT questions.id, questions.userid, questions.title, questions.description,username FROM questions INNER JOIN Evangadi_db.users ON questions.userid = Evangadi_db.users.userid ORDER BY questions.id DESC`
     );
 
     // Column 'userid' in field list is ambiguous
@@ -58,29 +56,28 @@ async function getQuestion(req, res) {
 }
 //single question function
 async function singleQuestion(req, res) {
-	//const questionid = req.params.questionid;
-    const { questionid } = req.body;
-	try {
-		// Perform a SELECT query to fetch a single question by its ID
-		const query = "SELECT * FROM questions WHERE questionid = ?";
-		const [question] = await dbConnection.query(query, [questionid]);
-		// console.log(query)
-		// console.log(question[0]);
+  const id = req.params.id;
+  console.log(id);
+  // const { questionid } = req.body;
+  try {
+    // Perform a SELECT query to fetch a single question by its ID
+    const query = "SELECT * FROM questions WHERE id = ?";
+    const [question] = await dbConnection.query(query, [id]);
+    // console.log(query)
+    // console.log(question[0]);
 
-		if (question.length === 0) {
-			return res
-				.status(StatusCodes.NOT_FOUND)
-				.json({ msg: "Question not found" });
-		}
-		// Send the retrieved question as a JSON response
-		res.status(StatusCodes.OK).json(question[0]);
-	} catch (error) {
-		console.log(error);
-		res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-			msg: "Something went wrong while fetching the question",
-		});
-	}
+    if (question.length === 0) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ msg: "Question not found" });
+    }
+    // Send the retrieved question as a JSON response
+    res.status(StatusCodes.OK).json(question[0]);
+  } catch (error) {
+    console.log(error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      msg: "Something went wrong while fetching the question",
+    });
+  }
 }
 module.exports = { askQuestion, getQuestion, singleQuestion };
-
-

@@ -13,7 +13,7 @@ const {
 router.get("/allQuestion", authMiddleware, getQuestion);
 
 //single question routes
-router.get("/singleQuestion", authMiddleware, singleQuestion);
+router.get("/singleQuestion/:id", authMiddleware, singleQuestion);
 
 //post a question
 router.post("/askQuestion", authMiddleware, askQuestion);
