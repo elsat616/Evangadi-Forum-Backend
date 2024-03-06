@@ -37,7 +37,7 @@ async function askQuestion(req, res) {
 async function getQuestion(req, res) {
   try {
     const [questions] = await dbConnection.query(
-      `SELECT questions.id, questions.userid, questions.title, questions.description,username FROM questions INNER JOIN Evangadi_db.users ON questions.userid = Evangadi_db.users.userid ORDER BY questions.id DESC`
+      `SELECT questions.id, questions.userid, questions.title, questions.description,username FROM questions INNER JOIN users ON questions.userid = users.userid ORDER BY questions.id DESC`
     );
 
     // Column 'userid' in field list is ambiguous

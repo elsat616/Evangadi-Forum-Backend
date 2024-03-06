@@ -19,6 +19,8 @@ const questionsRoutes = require("./routes/questionRoute");
 
 const answersRoutes = require("./routes/answerRoute");
 
+const profileRoute = require("./routes/profileRoute");
+
 //json middleware to extract json
 app.use(express.json());
 
@@ -33,6 +35,8 @@ app.use("/api/questions", authMiddleware, questionsRoutes);
 //answer routes middleware
 app.use("/api/answers", authMiddleware, answersRoutes);
 // app.use("/api/answers", answersRoutes);
+
+app.use("/api/profile", authMiddleware, profileRoute);
 async function start() {
   try {
     const result = await dbConnection.execute("select'test' ");
