@@ -34,32 +34,5 @@ async function postProfile(req, res) {
       .json({ msg: "Something went wrong. please try again later" });
   }
 }
-// // Get all answers for a question function
-// async function getAnswer(req, res) {
-//   const { id } = req.params;
-//   // console.log(id);
 
-//   //const questionid = req.params.questionid;
-//   // const { questionid } = req.body;
-//   try {
-//     const uniqueId = await dbConnection.query(
-//       "SELECT questionid FROM questions WHERE id = ?",
-//       [id]
-//     );
-
-//     const questionid = uniqueId[0][0].questionid;
-//     const [answer] = await dbConnection.query(
-//       "SELECT answer, answers.userid,username From answers INNER JOIN users ON answers.userid = users.userid WHERE questionid = ? ORDER BY answers.answerid DESC",
-//       [questionid]
-//     );
-//     console.log(questionid, "ddddddddddddd");
-
-//     return res.status(StatusCodes.OK).json(answer);
-//   } catch (error) {
-//     console.error(error.message);
-//     return res
-//       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-//       .json({ msg: "Something went wrong, please try again later" });
-//   }
-// }
 module.exports = { postProfile };

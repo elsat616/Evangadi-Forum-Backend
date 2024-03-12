@@ -9,7 +9,7 @@ async function postAnswer(req, res) {
 
   const { id } = req.params;
   const { userid } = req.user;
-  const {username} = req.user
+  const { username } = req.user;
   console.log(id + " ---id, ", username + " ---userName");
   if (!answer) {
     return res
@@ -24,19 +24,10 @@ async function postAnswer(req, res) {
     );
     const questionid = uniqueId[0][0].questionid;
 
-    // console.log(questionid , "hhhhhh");
-
-    // if (duplicateAnswer.length > 0) {
-    // 	return res.status(StatusCodes.BAD_REQUEST).json({
-    // 		msg: "You have already posted an answer for this question",
-    // 	});
-    // }
-
     await dbConnection.query(
       "INSERT INTO answers (userid, questionid, answer) VALUES (?, ?, ?)",
       [userid, questionid, answer]
     );
-    // console.log(id, "lllllllllllllll");
 
     return res
       .status(StatusCodes.OK)
@@ -48,13 +39,10 @@ async function postAnswer(req, res) {
       .json({ msg: "Something went wrong. please try again later" });
   }
 }
-// Get all answers for a question function
+
 async function getAnswer(req, res) {
   const { id } = req.params;
-  // console.log(id);
 
-  //const questionid = req.params.questionid;
-  // const { questionid } = req.body;
   try {
     const uniqueId = await dbConnection.query(
       "SELECT questionid FROM questions WHERE id = ?",
@@ -67,7 +55,7 @@ async function getAnswer(req, res) {
       [questionid]
     );
     console.log(questionid, "ddddddddddddd");
-    
+
     return res.status(StatusCodes.OK).json(answer);
   } catch (error) {
     console.error(error.message);

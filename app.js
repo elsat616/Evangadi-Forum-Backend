@@ -30,8 +30,6 @@ app.use("/api/users", UserRoutes);
 //questions routes middleware
 app.use("/api/questions", authMiddleware, questionsRoutes);
 
-// app.use("/api/questions", questionsRoutes);
-
 //answer routes middleware
 app.use("/api/answers", authMiddleware, answersRoutes);
 // app.use("/api/answers", answersRoutes);
